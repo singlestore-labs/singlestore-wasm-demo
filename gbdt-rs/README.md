@@ -2,6 +2,8 @@
 
 MesaTEE GBDT-RS : a fast and secure GBDT library, supporting TEEs such as Intel SGX and ARM TrustZone
 
+MesaTEE GBDT-RS provides the training and inference capabilities. And it can use the models trained by xgboost to do inference tasks.
+
 <https://github.com/mesalock-linux/gbdt-rs/>
 
 ## Gradient boosting
