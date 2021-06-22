@@ -10,10 +10,4 @@ serde_derive = "1.0"
 serde_json = "1.0"
 time = { version = "0.2.27", optional = true }
 gbdt = "0.1.1"
-
-[lib]
-name = "gbdt"
-# https://docs.wasmtime.dev/wasm-rust.html#writing-libraries
-# need cdylib
-crate-type = ["cdylib", "staticlib"]
-path = "src/lib.rs"
+lazy_static = "1.4.0"

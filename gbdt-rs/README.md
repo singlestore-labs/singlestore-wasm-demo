@@ -20,11 +20,11 @@ There's a bit of hackery around types and assumptions of length. TODO.
 ## WASM
 
 ```bash
-cargo build --target wasm32-wasi --release
+cargo rustc --target wasm32-wasi --release -- -Z wasi-exec-model=reactor
 
 # optional: see predict is exported
 wasm2wat target/wasm32-wasi/release/gbdt.wasm > target/wasm32-wasi/release/gbdt.wat
-cat target/wasm32-wasi/release/gbdt.wat | grep "predict.command_export"
+cat target/wasm32-wasi/release/gbdt.wat | grep "predict"
 
 # run the library function
 wasmtime --invoke predict target/wasm32-wasi/release/gbdt.wasm 1 2 3 4 5
@@ -33,10 +33,12 @@ wasmtime --invoke predict target/wasm32-wasi/release/gbdt.wasm 1 2 3 4 5
 python3 py/test.py
 
 # load this into s2
-echo -n '"' > target/wasm32-wasi/release/gbdt.base64
-cat target/wasm32-wasi/release/gbdt.wasm | base64 >> target/wasm32-wasi/release/gbdt.base64
-echo -n '"' >> target/wasm32-wasi/release/gbdt.base64
+echo -n 'create function predict(f1 float not null, f2 float not null, f3 float not null, f4 float not null, f5 float not null) returns float not null as wasm  "' > target/wasm32-wasi/release/gbdt.sql
+base64 -w0 target/wasm32-wasi/release/gbdt.wasm >> target/wasm32-wasi/release/gbdt.sql
+echo -n '";' >> target/wasm32-wasi/release/gbdt.sql
 
-# copy entire string
-xclip -sel c < target/wasm32-wasi/release/gbdt.base64
+memsql x_db < /home/bhayes/repos/oss/singlestore-wasm-demo/gbdt-rs/target/wasm32-wasi/release/gbdt.sql
+
+memsql
+show functions;
 ```
