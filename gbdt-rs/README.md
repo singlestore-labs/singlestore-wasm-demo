@@ -17,7 +17,7 @@ This simple example supports most [XGBoost](https://xgboost.readthedocs.io/en/la
 TODO show how to convert.
 There's a bit of hackery around types and assumptions of length. TODO.
 
-## WASM
+## Usage
 
 ```bash
 cargo rustc --target wasm32-wasi --release -- -Z wasi-exec-model=reactor
