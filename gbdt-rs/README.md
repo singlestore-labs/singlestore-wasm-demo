@@ -17,6 +17,11 @@ This simple example supports most [XGBoost](https://xgboost.readthedocs.io/en/la
 TODO show how to convert.
 There's a bit of hackery around types and assumptions of length. TODO.
 
+## Dataset
+
+The iris dataset gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
+
+![three species of iris flowers: setosa, versicolor, and virginica](./img/iris.png)
 ## Usage
 
 ```bash
@@ -41,4 +46,13 @@ memsql x_db < /home/bhayes/repos/oss/singlestore-wasm-demo/gbdt-rs/target/wasm32
 
 memsql
 show functions;
+
+select predict(1, 2, 3, 4, 5);
+
+Query OK, 1 row affected (0.071 sec)
++------------------------+
+| predict(1, 2, 3, 4, 5) |
++------------------------+
+|                1.00003 |
++------------------------+
 ```
