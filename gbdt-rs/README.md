@@ -14,14 +14,15 @@ decision trees.
 
 This simple example supports most [XGBoost](https://xgboost.readthedocs.io/en/latest/) models.
 
-TODO show how to convert.
-There's a bit of hackery around types and assumptions of length. TODO.
-
 ## Dataset
 
 The iris dataset gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
 
 ![three species of iris flowers: setosa, versicolor, and virginica](./img/iris.png)
+
+-- Iris Versicolour : 1
+-- Iris Virginica : 2
+-- Iris Setosa : 3
 ## Usage
 
 ```bash
@@ -47,12 +48,22 @@ memsql x_db < /home/bhayes/repos/oss/singlestore-wasm-demo/gbdt-rs/target/wasm32
 memsql
 show functions;
 
-select predict(1, 2, 3, 4, 5);
+select predict(3, 5.1, 3.5, 1.4, 0.2);
 
-Query OK, 1 row affected (0.071 sec)
-+------------------------+
-| predict(1, 2, 3, 4, 5) |
-+------------------------+
-|                1.00003 |
-+------------------------+
+CREATE TABLE IF NOT EXISTS iris_data (
+  sl float NOT NULL,
+  sw FLOAT NOT NULL,
+  pl FLOAT NOT NULL,
+  pw FLOAT NOT NULL,
+  species VARCHAR(255) NOT NULL
+);
+
+LOAD DATA LOCAL INFILE  '$(PWD)/data/iris/bezdekIris.data.txt'
+INTO TABLE iris_data
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+
+select * from iris_data limit 149,149;
+
+select predict(1, sl, sw, pl, pw) from iris_data limit 149,149;
 ```

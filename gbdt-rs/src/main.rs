@@ -8,7 +8,7 @@ pub mod model;
 fn main() {}
 
 #[no_mangle]
-pub extern "C" fn predict(label: f64, f1: f64, f2: f64, f3: f64, f4: f64) -> f64 {
+pub extern "C" fn predict(label: f32, f1: f32, f2: f32, f3: f32, f4: f32) -> f32 {
     let mut dv: DataVec = Vec::new();
     dv.push(Data {
         label: label as f32,
@@ -20,5 +20,5 @@ pub extern "C" fn predict(label: f64, f1: f64, f2: f64, f3: f64, f4: f64) -> f64
     });
 
     let predicted: PredVec = model::COMPILED_MODEL.predict(&dv);
-    return predicted[0] as f64;
+    return predicted[0];
 }
